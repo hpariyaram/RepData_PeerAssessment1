@@ -1,0 +1,16 @@
+{
+    "contents" : "---\ntitle: \"Reproducible Research: Peer Assessment 1\"\noutput: \n  html_document:\n    keep_md: true\n---\n\n## Loading and preprocessing the data\n```{r, message=FALSE}\nlibrary(plyr)\nlibrary(dplyr)\n```\n\n```{r}\nidata <- read.csv(\"activity.csv\", na.strings = \"NA\")\nhead(idata, 10)\n```\n---\n\n## What is mean total number of steps taken per day?\n\n```{r}\ndaysdata <- group_by(idata, date)\nsumdata1 <- summarise(daysdata, sum(steps, na.rm=TRUE))\ncolnames (sumdata1) <- c(\"date\",\"Total\")\nhist(sumdata1$Total, breaks=60, main = \"Histogram of Total Steps per day\", xlab = \"Total Steps per Day\")\n\n```\n\n``` {r}\nMeanSteps <- mean(sumdata1$Total, na.rm=TRUE)\nMedianSteps <- median(sumdata1$Total, na.rm=TRUE)\noutdata <- paste(\"Mean Steps = \", MeanSteps, \"  Median of Steps = \",MedianSteps)\noutdata\n```\n\n\n## What is the average daily activity pattern?\n\n```{r}\nintervaldata <- group_by(idata, interval)\nsumdata1 <- summarise(intervaldata, mean(steps, na.rm=TRUE))\ncolnames (sumdata1) <- c(\"Interval\",\"Average\")\n\nplot(sumdata1$Interval,sumdata1$Average, type = \"l\", xlab = \"Time Intervals\", ylab = \"Average Steps\", main = \"Average Steps per Interval\")\n```\n\n```{r}\nMaxStepsInterval <- sumdata1$Interval[which.max(sumdata1$Average)]\nMaxIntervalOutData <- paste(\"Maximum Average Steps Occurs at Time Interval \", MaxStepsInterval)\nMaxIntervalOutData\n```\n\n\n## Imputing missing values\n\n\n\n## Are there differences in activity patterns between weekdays and weekends?\n\n",
+    "created" : 1423932332905.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1383363906",
+    "id" : "AD8C5A3F",
+    "lastKnownWriteTime" : 1424019259,
+    "path" : "C:/Bahul/Coursera/JHU-DataScience/RepR/RepData_PeerAssessment1/PA1_template.Rmd",
+    "project_path" : "PA1_template.Rmd",
+    "properties" : {
+    },
+    "source_on_save" : false,
+    "type" : "r_markdown"
+}
