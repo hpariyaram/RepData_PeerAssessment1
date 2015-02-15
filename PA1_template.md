@@ -9,8 +9,8 @@ library(dplyr)
 
 
 ```r
-idata <- read.csv("activity.csv", na.strings = "NA")
-head(idata, 10)
+OriginalData <- read.csv("activity.csv", na.strings = "NA")
+head(OriginalData, 10)
 ```
 
 ```
@@ -32,7 +32,7 @@ head(idata, 10)
 
 
 ```r
-daysdata <- group_by(idata, date)
+daysdata <- group_by(OriginalData, date)
 sumdata1 <- summarise(daysdata, sum(steps, na.rm=TRUE))
 colnames (sumdata1) <- c("date","Total")
 hist(sumdata1$Total, breaks=60, main = "Histogram of Total Steps per day", xlab = "Total Steps per Day")
@@ -44,8 +44,8 @@ hist(sumdata1$Total, breaks=60, main = "Histogram of Total Steps per day", xlab 
 ```r
 MeanSteps <- mean(sumdata1$Total, na.rm=TRUE)
 MedianSteps <- median(sumdata1$Total, na.rm=TRUE)
-outdata <- paste("Mean Steps = ", MeanSteps, "  Median of Steps = ",MedianSteps)
-outdata
+OutMessage1 <- paste("Mean Steps = ", MeanSteps, "  Median of Steps = ",MedianSteps)
+OutMessage1
 ```
 
 ```
@@ -57,20 +57,20 @@ outdata
 
 
 ```r
-intervaldata <- group_by(idata, interval)
-sumdata1 <- summarise(intervaldata, mean(steps, na.rm=TRUE))
-colnames (sumdata1) <- c("Interval","Average")
+intervaldata <- group_by(OriginalData, interval)
+sumdata2 <- summarise(intervaldata, mean(steps, na.rm=TRUE))
+colnames (sumdata2) <- c("Interval","Average")
 
-plot(sumdata1$Interval,sumdata1$Average, type = "l", xlab = "Time Intervals", ylab = "Average Steps", main = "Average Steps per Interval")
+plot(sumdata2$Interval,sumdata2$Average, type = "l", xlab = "Time Intervals", ylab = "Average Steps", main = "Average Steps per Interval")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 
 ```r
-MaxStepsInterval <- sumdata1$Interval[which.max(sumdata1$Average)]
-MaxIntervalOutData <- paste("Maximum Average Steps Occurs at Time Interval ", MaxStepsInterval)
-MaxIntervalOutData
+MaxStepsInterval <- sumdata2$Interval[which.max(sumdata2$Average)]
+MaxIntervalOutMessage <- paste("Maximum Average Steps Occurs at Time Interval ", MaxStepsInterval)
+MaxIntervalOutMessage
 ```
 
 ```
@@ -81,6 +81,59 @@ MaxIntervalOutData
 ## Imputing missing values
 
 
+```r
+NumberOfNA <- nrow(OriginalData[is.na(OriginalData$steps),])
+NumberOfNAMessage <- paste(" The Number of rows with NAs are = ",NumberOfNA)
+NumberOfNAMessage
+```
 
+```
+## [1] " The Number of rows with NAs are =  2304"
+```
+
+
+```r
+daysdata2 <- group_by(OriginalData, date)
+sumdata3 <- summarise(daysdata2, mean(steps, na.rm=TRUE))
+colnames (sumdata3) <- c("date","MeanSteps")
+NewImputedData <- OriginalData
+sumdata3[,"MeanSteps"] <- round(sumdata3$MeanSteps)
+NewImputedData[,"steps"] <- sumdata3$MeanSteps
+```
+
+
+```r
+daysdata5 <- group_by(NewImputedData, date)
+sumdata5 <- summarise(daysdata5, sum(steps, na.rm=TRUE))
+colnames (sumdata5) <- c("date","Total")
+hist(sumdata5$Total, breaks=60, main = "Histogram of Total Steps per day with Imputed Data", xlab = "Total Steps per Day")
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+
+
+
+```r
+MeanSteps2 <- mean(sumdata5$Total, na.rm=TRUE)
+MedianSteps2 <- median(sumdata5$Total, na.rm=TRUE)
+OutMessage3 <- paste("Mean Steps with Imputed Data = ", MeanSteps2, "  Median of Steps = ",MedianSteps2)
+OutMessage3
+```
+
+```
+## [1] "Mean Steps with Imputed Data =  9343.47540983607   Median of Steps =  9333"
+```
 ## Are there differences in activity patterns between weekdays and weekends?
 
+
+```r
+NewImputedData[,"Weekday"] <-  weekdays(as.Date(NewImputedData$date))
+
+##NewImputedWeekdayData <- subset(NewImputedData,(Weekday != c("Sunday","Saturday")),"steps","date","interval")
+NewImputedWeekdayData <- NewImputedData
+
+##NewImputedWeekEndData <- subset(NewImputedData,(Weekday == c("Sunday","Saturday")),"steps","date","interval")
+NewImputedWeekEndData <- NewImputedData
+##head(NewImputedWeekEndData,10)
+##plot(NewImputedWeedayData$steps,NewImputedWeekdayData$interval, type = "l", xlab = "Interval", ylab = "Number of Steps", main = "Steps per Interval")
+```
