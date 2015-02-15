@@ -14,10 +14,13 @@ NewImputedData[,"steps"] <- sumdata3$MeanSteps
 
 NewImputedData[,"Weekday"] <-  weekdays(as.Date(NewImputedData$date))
 
-NewImputedWeekdayData <- subset(NewImputedData,(Weekday != c("Sunday","Saturday")),"steps","date","interval")
+NewImputedWDData <- subset(NewImputedData,(Weekday != c("Sunday","Saturday")),"steps","date","interval")
+##NewImputedWeekdayData <- NewImputedData
+
+NewImputedWEData <- subset(NewImputedData,(Weekday == c("Sunday","Saturday")),"steps","date","interval")
+##NewImputedWeekEndData <- NewImputedData
+##head(NewImputedWeekEndData,10)
+plot(NewImputedWDData$steps,NewImputedWDData$interval, type = "l", xlab = "Interval", ylab = "Number of Steps", main = "Steps per Interval")
 
 
-NewImputedWeekEndData <- subset(NewImputedData,(Weekday == c("Sunday","Saturday")),"steps","date","interval")
-
-head(NewImputedWeekEndData,10)
 }

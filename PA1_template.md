@@ -129,11 +129,13 @@ OutMessage3
 ```r
 NewImputedData[,"Weekday"] <-  weekdays(as.Date(NewImputedData$date))
 
-##NewImputedWeekdayData <- subset(NewImputedData,(Weekday != c("Sunday","Saturday")),"steps","date","interval")
-NewImputedWeekdayData <- NewImputedData
+##NewImputedWDData <- subset(NewImputedData,,(Weekday != c("Sunday","Saturday")),"steps","date","interval")
+NewImputedWDData <- NewImputedData
 
-##NewImputedWeekEndData <- subset(NewImputedData,(Weekday == c("Sunday","Saturday")),"steps","date","interval")
-NewImputedWeekEndData <- NewImputedData
+##NewImputedWEData <- subset(NewImputedData,,(Weekday == c("Sunday","Saturday")),"steps","date","interval")
+NewImputedWEData <- NewImputedData
 ##head(NewImputedWeekEndData,10)
-##plot(NewImputedWeedayData$steps,NewImputedWeekdayData$interval, type = "l", xlab = "Interval", ylab = "Number of Steps", main = "Steps per Interval")
+plot(NewImputedWDData$steps,NewImputedWDData$interval, type = "l", xlab = "Interval", ylab = "Number of Steps", main = "Steps per Interval")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
