@@ -9,10 +9,6 @@ library(dplyr)
 library(ggplot2)
 library(data.table)
 ```
-
-```
-## Warning: package 'data.table' was built under R version 3.1.3
-```
 The head R function is used to show the nature of the observation in the Activity data set.
 
 ```r
@@ -153,6 +149,6 @@ ggplot(stepsInXIntervals, aes(x=interval, y=steps)) +geom_line(colour="darkblue"
 
 ![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
-The observation from the plotted panel is that the weekend activity is more compared to weekday activities.
+The observation from the plotted panel is that the weekend activities are more compared to weekday activities.
 
    

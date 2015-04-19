@@ -109,6 +109,6 @@ ggplot(stepsInXIntervals, aes(x=interval, y=steps)) +geom_line(colour="darkblue"
 
 ```
 
-The observation from the plotted panel is that the weekend activity is more compared to weekday activities.
+The observation from the plotted panel is that the weekend activities are more compared to weekday activities.
 
    
